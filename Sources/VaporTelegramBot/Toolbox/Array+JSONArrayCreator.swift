@@ -9,9 +9,13 @@
 import Foundation
 import JSON
 
-extension Array where Element: JSONRepresentable {
+extension Array where Element: JSONConvertible {
 
     func jsonArray() throws -> [JSON] {
         return try map { try $0.makeJSON() }
+    }
+
+    func jsonArrayElement() throws -> JSON {
+        return try JSON(jsonArray())
     }
 }
