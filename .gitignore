@@ -1,0 +1,13 @@
+Packages
+# Package.pins should not be checked in
+Package.pins
+.build
+xcuserdata
+*.xcodeproj
+
+# idea files
+.idea/
+
+# macOS specific
+DerivedData/
+.DS_Store
