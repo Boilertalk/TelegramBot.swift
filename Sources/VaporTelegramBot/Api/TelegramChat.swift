@@ -4,7 +4,6 @@
 
 import Foundation
 import JSON
-import Vapor
 
 public final class TelegramChat: TelegramJSONConvertible {
 
@@ -69,8 +68,7 @@ public final class TelegramChat: TelegramJSONConvertible {
         if let type = TelegramChatType(rawValue: try json.get(Keys.typeKey)) {
             self.type = type
         } else {
-            // TODO: Change to custom Error
-            throw Abort(.badRequest, metadata: "type must be a valid value")
+            throw VaporTelegramError.requiredParameterMissing(parameter: Keys.typeKey)
         }
 
         self.title = json[Keys.titleKey]?.string

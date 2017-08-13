@@ -4,7 +4,6 @@
 
 import Foundation
 import JSON
-import Vapor
 
 public final class TelegramMessageEntity: TelegramJSONConvertible {
 
@@ -46,8 +45,7 @@ public final class TelegramMessageEntity: TelegramJSONConvertible {
         if let type = TelegramMessageEntityType(rawValue: try json.get(Keys.typeKey)) {
             self.type = type
         } else {
-            // TODO: Change to custom Error
-            throw Abort(.badRequest, metadata: "type must be a valid value")
+            throw VaporTelegramError.requiredParameterMissing(parameter: Keys.typeKey)
         }
 
         self.offset = try json.get(Keys.offsetKey)
