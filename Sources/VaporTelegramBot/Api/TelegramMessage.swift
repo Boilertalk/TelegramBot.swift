@@ -40,6 +40,8 @@ public final class TelegramMessage: TelegramJSONConvertible {
         public static let documentKey = "document"
         public static let gameKey = "game"
         public static let photoKey = "photo"
+        public static let stickerKey = "sticker"
+        public static let videoKey = "video"
     }
 
     // MARK: - Primitive types
@@ -140,6 +142,12 @@ public final class TelegramMessage: TelegramJSONConvertible {
     /// Optional. Message is a photo, available sizes of the photo
     public var photo: [TelegramPhotoSize]?
 
+    /// Optional. Message is a sticker, information about the sticker
+    public var sticker: TelegramSticker?
+
+    /// Optional. Message is a video, information about the video
+    public var video: TelegramVideo?
+
     public init(json: JSON) throws {
         // *** Primitive types ***
         self.messageId = try json.get(Keys.messageIdKey)
@@ -200,6 +208,14 @@ public final class TelegramMessage: TelegramJSONConvertible {
         }
 
         self.photo = try json[Keys.photoKey]?.makeArray()
+
+        if let stickerJson = json[Keys.stickerKey] {
+            self.sticker = try TelegramSticker(json: stickerJson)
+        }
+
+        if let videoJson = json[Keys.videoKey] {
+            self.video = try TelegramVideo(json: videoJson)
+        }
         // *** End Object types ***
     }
 
@@ -290,6 +306,14 @@ public final class TelegramMessage: TelegramJSONConvertible {
 
         if let photo = photo {
             try json.set(Keys.photoKey, photo.jsonArrayElement())
+        }
+
+        if let sticker = sticker {
+            try json.set(Keys.stickerKey, sticker.makeJSON())
+        }
+
+        if let video = video {
+            try json.set(Keys.videoKey, video.makeJSON())
         }
         // *** End Object types ***
 

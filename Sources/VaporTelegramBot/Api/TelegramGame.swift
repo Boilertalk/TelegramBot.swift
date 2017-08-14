@@ -51,7 +51,7 @@ public final class TelegramGame: TelegramJSONConvertible {
 
         self.text = json[Keys.textKey]?.string
 
-        if let photo: [TelegramPhotoSize] = json[Keys.photoKey]?.makeArray() {
+        if let photo: [TelegramPhotoSize] = try json[Keys.photoKey]?.makeArray() {
             self.photo = photo
         } else {
             throw VaporTelegramError.requiredParameterHasWrongType(
@@ -60,7 +60,7 @@ public final class TelegramGame: TelegramJSONConvertible {
             )
         }
 
-        self.textEntities = json[Keys.textEntitiesKey]?.makeArray()
+        self.textEntities = try json[Keys.textEntitiesKey]?.makeArray()
 
         if let animationJson = json[Keys.animationKey] {
             self.animation = try TelegramAnimation(json: animationJson)
