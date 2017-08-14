@@ -42,6 +42,7 @@ public final class TelegramMessage: TelegramJSONConvertible {
         public static let photoKey = "photo"
         public static let stickerKey = "sticker"
         public static let videoKey = "video"
+        public static let voiceKey = "voice"
     }
 
     // MARK: - Primitive types
@@ -148,6 +149,9 @@ public final class TelegramMessage: TelegramJSONConvertible {
     /// Optional. Message is a video, information about the video
     public var video: TelegramVideo?
 
+    /// Optional. Message is a voice message, information about the file
+    public var voice: TelegramVoice?
+
     public init(json: JSON) throws {
         // *** Primitive types ***
         self.messageId = try json.get(Keys.messageIdKey)
@@ -215,6 +219,10 @@ public final class TelegramMessage: TelegramJSONConvertible {
 
         if let videoJson = json[Keys.videoKey] {
             self.video = try TelegramVideo(json: videoJson)
+        }
+
+        if let voiceJson = json[Keys.voiceKey] {
+            self.voice = try TelegramVoice(json: voiceJson)
         }
         // *** End Object types ***
     }
@@ -314,6 +322,10 @@ public final class TelegramMessage: TelegramJSONConvertible {
 
         if let video = video {
             try json.set(Keys.videoKey, video.makeJSON())
+        }
+
+        if let voice = voice {
+            try json.set(Keys.voiceKey, voice.makeJSON())
         }
         // *** End Object types ***
 
