@@ -36,6 +36,10 @@ public final class TelegramMessage: TelegramJSONConvertible {
         public static let forwardFromChatKey = "forward_from_chat"
         public static let replyToMessageKey = "reply_to_message"
         public static let entitiesKey = "entities"
+        public static let audioKey = "audio"
+        public static let documentKey = "document"
+        public static let gameKey = "game"
+        public static let photoKey = "photo"
     }
 
     // MARK: - Primitive types
@@ -123,6 +127,19 @@ public final class TelegramMessage: TelegramJSONConvertible {
     /// that appear in the text
     public var entities: [TelegramMessageEntity]?
 
+    /// Optional. Message is an audio file, information about the file
+    public var audio: TelegramAudio?
+
+    /// Optional. Message is a general file, information about the file
+    public var document: TelegramDocument?
+
+    /// Optional. Message is a game, information about the game.
+    /// More about games » https://core.telegram.org/bots/api#games
+    public var game: TelegramGame?
+
+    /// Optional. Message is a photo, available sizes of the photo
+    public var photo: [TelegramPhotoSize]?
+
     public init(json: JSON) throws {
         // *** Primitive types ***
         self.messageId = try json.get(Keys.messageIdKey)
@@ -169,6 +186,20 @@ public final class TelegramMessage: TelegramJSONConvertible {
         }
 
         self.entities = try json[Keys.entitiesKey]?.makeArray()
+
+        if let audioJson = json[Keys.audioKey] {
+            self.audio = try TelegramAudio(json: audioJson)
+        }
+
+        if let documentJson = json[Keys.documentKey] {
+            self.document = try TelegramDocument(json: documentJson)
+        }
+
+        if let gameJson = json[Keys.gameKey] {
+            self.game = try TelegramGame(json: gameJson)
+        }
+
+        self.photo = try json[Keys.photoKey]?.makeArray()
         // *** End Object types ***
     }
 
@@ -239,6 +270,26 @@ public final class TelegramMessage: TelegramJSONConvertible {
 
         if let replyToMessage = replyToMessage {
             try json.set(Keys.replyToMessageKey, replyToMessage.makeJSON())
+        }
+
+        if let entities = entities {
+            try json.set(Keys.entitiesKey, entities.jsonArrayElement())
+        }
+
+        if let audio = audio {
+            try json.set(Keys.audioKey, audio.makeJSON())
+        }
+
+        if let document = document {
+            try json.set(Keys.documentKey, document.makeJSON())
+        }
+
+        if let game = game {
+            try json.set(Keys.gameKey, game.makeJSON())
+        }
+
+        if let photo = photo {
+            try json.set(Keys.photoKey, photo.jsonArrayElement())
         }
         // *** End Object types ***
 

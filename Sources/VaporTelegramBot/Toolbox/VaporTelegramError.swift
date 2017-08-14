@@ -7,4 +7,5 @@ import Foundation
 public enum VaporTelegramError: Error {
 
     case requiredParameterMissing(parameter: String)
+    case requiredParameterHasWrongType(parameter: String, neededType: String)
 }

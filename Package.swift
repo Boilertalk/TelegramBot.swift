@@ -6,7 +6,8 @@ let package = Package(
         Target(name: "VaporTelegramBot")
     ],
     dependencies: [
-        .Package(url: "https://github.com/vapor/vapor.git", majorVersion: 2)
+        .Package(url: "https://github.com/vapor/engine.git", majorVersion: 2),
+        .Package(url: "https://github.com/vapor/json.git", majorVersion: 2)
     ],
     exclude: []
 )
