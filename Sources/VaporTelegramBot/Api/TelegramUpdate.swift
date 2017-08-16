@@ -20,6 +20,7 @@ public final class TelegramUpdate: TelegramJSONConvertible {
         public static let editedMessageKey = "edited_message"
         public static let channelPostKey = "channel_post"
         public static let editedChannelPostKey = "channel_post"
+        public static let callbackQueryKey = "callback_query"
     }
 
     // MARK: - Primitive types
@@ -42,6 +43,9 @@ public final class TelegramUpdate: TelegramJSONConvertible {
     /// Optional. New version of a channel post that is known to the bot and was edited
     public var editedChannelPost: TelegramMessage?
 
+    /// Optional. New incoming callback query
+    public var callbackQuery: TelegramCallbackQuery?
+
     public init(json: JSON) throws {
         self.updateId = try json.get(Keys.updateIdKey)
 
@@ -59,6 +63,10 @@ public final class TelegramUpdate: TelegramJSONConvertible {
 
         if let editedChannelPostJson = json[Keys.editedChannelPostKey] {
             self.editedChannelPost = try TelegramMessage(json: editedChannelPostJson)
+        }
+
+        if let callbackQueryJson = json[Keys.callbackQueryKey] {
+            self.callbackQuery = try TelegramCallbackQuery(json: callbackQueryJson)
         }
     }
 
@@ -81,6 +89,10 @@ public final class TelegramUpdate: TelegramJSONConvertible {
 
         if let editedChannelPost = editedChannelPost {
             try json.set(Keys.editedChannelPostKey, editedChannelPost)
+        }
+
+        if let callbackQuery = callbackQuery {
+            try json.set(Keys.callbackQueryKey, callbackQuery)
         }
 
         return json
