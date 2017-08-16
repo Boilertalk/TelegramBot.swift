@@ -44,6 +44,16 @@ public final class TelegramMessage: TelegramJSONConvertible {
         public static let videoKey = "video"
         public static let voiceKey = "voice"
         public static let videoNoteKey = "video_note"
+        public static let newChatMembersKey = "new_chat_members"
+        public static let contactKey = "contact"
+        public static let locationKey = "location"
+        public static let venueKey = "venue"
+        public static let newChatMemberKey = "new_chat_member"
+        public static let leftChatMemberKey = "left_chat_member"
+        public static let newChatPhotoKey = "new_chat_photo"
+        public static let pinnedMessageKey = "pinned_message"
+        public static let invoiceKey = "invoice"
+        public static let successfulPaymentKey = "successful_payment"
     }
 
     // MARK: - Primitive types
@@ -156,6 +166,42 @@ public final class TelegramMessage: TelegramJSONConvertible {
     /// Optional. Message is a video note, information about the video message
     public var videoNote: TelegramVideoNote?
 
+    /// Optional. New members that were added to the group or supergroup and information about them
+    /// (the bot itself may be one of these members)
+    public var newChatMembers: [TelegramUser]?
+
+    /// Optional. Message is a shared contact, information about the contact
+    public var contact: TelegramContact?
+
+    /// Optional. Message is a shared location, information about the location
+    public var location: TelegramLocation?
+
+    /// Optional. Message is a venue, information about the venue
+    public var venue: TelegramVenue?
+
+    /// Optional. A new member was added to the group, information about them
+    /// (this member may be the bot itself)
+    public var newChatMember: TelegramUser?
+
+    /// Optional. A member was removed from the group, information about them
+    /// (this member may be the bot itself)
+    public var leftChatMember: TelegramUser?
+
+    /// Optional. A chat photo was change to this value
+    public var newChatPhoto: [TelegramPhotoSize]?
+
+    /// Optional. Specified message was pinned. Note that the Message object in this field will not
+    /// contain further reply_to_message fields even if it is itself a reply.
+    public var pinnedMessage: TelegramMessage?
+
+    /// Optional. Message is an invoice for a payment, information about the invoice.
+    /// More about payments » https://core.telegram.org/bots/api#payments
+    public var invoice: TelegramInvoice?
+
+    /// Optional. Message is a service message about a successful payment, information about the payment.
+    /// More about payments » https://core.telegram.org/bots/api#payments
+    public var successfulPayment: TelegramSuccessfulPayment?
+
     public init(json: JSON) throws {
         // *** Primitive types ***
         self.messageId = try json.get(Keys.messageIdKey)
@@ -231,6 +277,42 @@ public final class TelegramMessage: TelegramJSONConvertible {
 
         if let videoNoteJson = json[Keys.videoNoteKey] {
             self.videoNote = try TelegramVideoNote(json: videoNoteJson)
+        }
+
+        self.newChatMembers = try json[Keys.newChatMembersKey]?.makeArray()
+
+        if let contactJson = json[Keys.contactKey] {
+            self.contact = try TelegramContact(json: contactJson)
+        }
+
+        if let locationJson = json[Keys.locationKey] {
+            self.location = try TelegramLocation(json: locationJson)
+        }
+
+        if let venueJson = json[Keys.venueKey] {
+            self.venue = try TelegramVenue(json: venueJson)
+        }
+
+        if let newChatMemberJson = json[Keys.newChatMemberKey] {
+            self.newChatMember = try TelegramUser(json: newChatMemberJson)
+        }
+
+        if let leftChatMemberJson = json[Keys.leftChatMemberKey] {
+            self.leftChatMember = try TelegramUser(json: leftChatMemberJson)
+        }
+
+        self.newChatPhoto = try json[Keys.newChatPhotoKey]?.makeArray()
+
+        if let pinnedMessageJson = json[Keys.pinnedMessageKey] {
+            self.pinnedMessage = try TelegramMessage(json: pinnedMessageJson)
+        }
+
+        if let invoiceJson = json[Keys.invoiceKey] {
+            self.invoice = try TelegramInvoice(json: invoiceJson)
+        }
+
+        if let successfulPaymentJson = json[Keys.successfulPaymentKey] {
+            self.successfulPayment = try TelegramSuccessfulPayment(json: successfulPaymentJson)
         }
         // *** End Object types ***
     }
@@ -338,6 +420,46 @@ public final class TelegramMessage: TelegramJSONConvertible {
 
         if let videoNote = videoNote {
             try json.set(Keys.videoNoteKey, videoNote.makeJSON())
+        }
+
+        if let newChatMembers = newChatMembers {
+            try json.set(Keys.newChatMembersKey, newChatMembers.jsonArrayElement())
+        }
+
+        if let contact = contact {
+            try json.set(Keys.contactKey, contact.makeJSON())
+        }
+
+        if let location = location {
+            try json.set(Keys.locationKey, location.makeJSON())
+        }
+
+        if let venue = venue {
+            try json.set(Keys.venueKey, venue.makeJSON())
+        }
+
+        if let newChatMember = newChatMember {
+            try json.set(Keys.newChatMemberKey, newChatMember.makeJSON())
+        }
+
+        if let leftChatMember = leftChatMember {
+            try json.set(Keys.leftChatMemberKey, leftChatMember.makeJSON())
+        }
+
+        if let newChatPhoto = newChatPhoto {
+            try json.set(Keys.newChatPhotoKey, newChatPhoto.jsonArrayElement())
+        }
+
+        if let pinnedMessage = pinnedMessage {
+            try json.set(Keys.pinnedMessageKey, pinnedMessage.makeJSON())
+        }
+
+        if let invoice = invoice {
+            try json.set(Keys.invoiceKey, invoice.makeJSON())
+        }
+
+        if let successfulPayment = successfulPayment {
+            try json.set(Keys.successfulPaymentKey, successfulPayment.makeJSON())
         }
         // *** End Object types ***
 
