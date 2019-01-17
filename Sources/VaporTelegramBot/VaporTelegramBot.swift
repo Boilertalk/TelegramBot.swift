@@ -8,7 +8,7 @@
 import Foundation
 import Vapor
 
-public struct VaporTelegramBot {
+public final class VaporTelegramBot {
 
     public typealias Update<UpdateType> = (_ id: Int, _ update: UpdateType) -> ()
 
