@@ -15,42 +15,42 @@ public struct VaporTelegramBot {
     // MARK: - Update Callbacks
 
     /// New incoming message of any kind — text, photo, sticker, etc.
-    var messageUpdate: Update<TelegramMessage>?
+    public var messageUpdate: Update<TelegramMessage>?
 
     /// New version of a message that is known to the bot and was edited
-    var editedMessageUpdate: Update<TelegramMessage>?
+    public var editedMessageUpdate: Update<TelegramMessage>?
 
     /// New incoming channel post of any kind — text, photo, sticker, etc.
-    var channelPostUpdate: Update<TelegramMessage>?
+    public var channelPostUpdate: Update<TelegramMessage>?
 
     /// New version of a channel post that is known to the bot and was edited
-    var editedChannelPostUpdate: Update<TelegramMessage>?
+    public var editedChannelPostUpdate: Update<TelegramMessage>?
 
     /// New incoming inline query
-    var inlineQueryUpdate: Update<TelegramInlineQuery>?
+    public var inlineQueryUpdate: Update<TelegramInlineQuery>?
 
     /// The result of an inline query that was chosen by a user and
     /// sent to their chat partner. Please see our documentation on the
     /// feedback collecting for details on how to enable these updates for
     /// your bot.
-    var chosenInlineResultUpdate: Update<TelegramChosenInlineResult>?
+    public var chosenInlineResultUpdate: Update<TelegramChosenInlineResult>?
 
     /// New incoming callback query
-    var callbackQueryUpdate: Update<TelegramCallbackQuery>?
+    public var callbackQueryUpdate: Update<TelegramCallbackQuery>?
 
     /// New incoming shipping query. Only for invoices with flexible price
-    var shippingQueryUpdate: Update<TelegramShippingQuery>?
+    public var shippingQueryUpdate: Update<TelegramShippingQuery>?
 
     /// New incoming pre-checkout query. Contains full information about checkout
-    var preCheckoutQueryUpdate: Update<TelegramPreCheckoutQuery>?
+    public var preCheckoutQueryUpdate: Update<TelegramPreCheckoutQuery>?
 
     // MARK: - Constants
 
     /// The default encoder used in this library
-    let defaultEncoder: JSONEncoder
+    public let defaultEncoder: JSONEncoder
 
     /// The default decoder used in this library
-    let defaultDecoder: JSONDecoder
+    public let defaultDecoder: JSONDecoder
 
     public init() {
         defaultEncoder = JSONEncoder()
