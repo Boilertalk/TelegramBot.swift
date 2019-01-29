@@ -1,12 +1,12 @@
-<a href="https://github.com/Boilertalk/VaporFacebookBot">
+<a href="https://github.com/Boilertalk/TelegramBot.swift">
   <img src="https://storage.googleapis.com/boilertalk/logo.svg" width="100%" height="256">
 </a>
 
 <p align="center">
-  <a href="https://travis-ci.org/Boilertalk/VaporFacebookBot">
-    <img src="https://travis-ci.org/Boilertalk/VaporTelegramBot.svg?branch=master" alt="Build Status">
+  <a href="https://travis-ci.org/Boilertalk/TelegramBot.swift">
+    <img src="https://travis-ci.org/Boilertalk/TelegramBot.swift.svg?branch=master" alt="Build Status">
   </a>
-  <a href="https://github.com/Boilertalk/VaporFacebookBot/blob/master/LICENSE">
+  <a href="https://github.com/Boilertalk/TelegramBot.swift/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat" alt="license">
   </a>
   <a href="https://swift.org">
@@ -17,13 +17,15 @@
   </a>
 </p>
 
-# :alembic: VaporTelegramBot
+# :alembic: TelegramBot.swift
 
-This library provides helpers for [Vapor 2](https://github.com/vapor/vapor) to interact with the [Telegram bot api](https://core.telegram.org/bots/api). It simplifies the requests to the Telegram API as well as parses incoming [updates](https://core.telegram.org/bots/api#getting-updates) for you.
+This library provides helpers for Swift to interact with the [Telegram bot api](https://core.telegram.org/bots/api). It simplifies the requests to the Telegram API as well as parses incoming [updates](https://core.telegram.org/bots/api#getting-updates) for you.
+
+This library can be used with [Vapor 3](https://github.com/vapor/vapor) and with any other web libraries.
 
 ## :sparkles: Supported features
 
-The following is a list with all features of the facebook Send API and webhooks as of May 2017 together with a note whether it is supported or not. If you find something that's not listed there please open an [issue](https://github.com/Boilertalk/VaporFacebookBot/issues).
+The following is a list with all features of the facebook Send API and webhooks as of May 2017 together with a note whether it is supported or not. If you find something that's not listed there please open an [issue](https://github.com/Boilertalk/TelegramBot.swift/issues).
 
 ### Webhooks
 
@@ -35,37 +37,16 @@ The following is a list with all features of the facebook Send API and webhooks 
 
 ## :package: Installation
 
-This Swift package is intended to be used together with Vapor 2.0.    
 Add the following line to your dependencies in the `Package.swift` file:
 
 ```Swift
-.Package(url: "https://github.com/Boilertalk/VaporTelegramBot.git", majorVersion: 0)
+.package(url: "https://github.com/Boilertalk/TelegramBot.swift.git", from: "0.3.0")
 ```
 
-Your `Package.swift` file should now look a little bit like the following:
+Then you can start importing `TelegramBot`.
 
 ```Swift
-import PackageDescription
-
-let package = Package(
-    name: "MyAwesomeBot",
-    targets: [
-        Target(name: "App"),
-        Target(name: "Run", dependencies: ["App"]),
-    ],
-    dependencies: [
-        .Package(url: "https://github.com/vapor/vapor.git", majorVersion: 2),
-        .Package(url: "https://github.com/vapor/fluent-provider.git", majorVersion: 1),
-        .Package(url: "https://github.com/Boilertalk/VaporTelegramBot.git", majorVersion: 0)
-    ],
-    exclude: [
-        "Config",
-        "Database",
-        "Localization",
-        "Public",
-        "Resources",
-    ]
-)
+import TelegramBot
 ```
 
 ## :book: Documentation
