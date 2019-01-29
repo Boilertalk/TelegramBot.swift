@@ -10,6 +10,9 @@ let package = Package(
         .library(
             name: "TelegramBotVapor",
             targets: ["TelegramBotVapor"]),
+        .library(
+            name: "TelegramBotPromiseKit",
+            targets: ["TelegramBotPromiseKit"]),
     ],
     dependencies: [
         // Test dependencies
@@ -18,10 +21,14 @@ let package = Package(
 
         // Vapor for vapor related requests, optional.
         .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0"),
+
+        // PromiseKit dependency, optional.
+        .package(url: "https://github.com/mxcl/PromiseKit.git", from: "6.0.0"),
     ],
     targets: [
         .target(name: "TelegramBot", dependencies: []),
         .target(name: "TelegramBotVapor", dependencies: ["TelegramBot", "Vapor"]),
+        .target(name: "TelegramBotPromiseKit", dependencies: ["TelegramBot", "PromiseKit"]),
         .testTarget(name: "TelegramBotTests", dependencies: ["TelegramBot", "Quick", "Nimble"])
     ]
 )
