@@ -40,7 +40,7 @@ The following is a list with all features of the facebook Send API and webhooks 
 Add the following line to your dependencies in the `Package.swift` file:
 
 ```Swift
-.package(url: "https://github.com/Boilertalk/TelegramBot.swift.git", from: "0.3.0")
+.package(url: "https://github.com/Boilertalk/TelegramBot.swift.git", from: "0.3.1")
 ```
 
 Then you can start importing `TelegramBot`.
