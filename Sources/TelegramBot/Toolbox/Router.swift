@@ -9,7 +9,7 @@ import Foundation
 
 public protocol TelegramHTTPRouter {
 
-    func register(path: String, callback: @escaping (_ req: TelegramHTTPRequest, _ cb: @escaping (TelegramHTTPStatus) -> ()) throws -> ())
+    func telegramRegister(path: String, callback: @escaping (_ req: TelegramHTTPRequest, _ cb: @escaping (TelegramHTTPStatus) -> ()) throws -> ())
 }
 
 public protocol TelegramHTTPRequest {
@@ -32,7 +32,7 @@ import Vapor
 
 extension Router {
 
-    public func register(path: String, callback: @escaping (_ req: TelegramHTTPRequest, _ cb: @escaping (TelegramHTTPStatus) -> ()) throws -> ()) {
+    public func telegramRegister(path: String, callback: @escaping (_ req: TelegramHTTPRequest, _ cb: @escaping (TelegramHTTPStatus) -> ()) throws -> ()) {
         post(path) { reqInternal -> Future<HTTPStatus> in
             let promiseStatus = reqInternal.eventLoop.newPromise(HTTPStatus.self)
 

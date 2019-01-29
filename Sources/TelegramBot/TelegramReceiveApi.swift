@@ -73,7 +73,7 @@ public final class TelegramReceiveApi {
      *                     up the route.
      */
     public func setupWebhook(path: String, router: TelegramHTTPRouter) {
-        setupWebhook(path: path, routerFunction: router.register)
+        setupWebhook(path: path, routerFunction: router.telegramRegister)
     }
 
     /**
