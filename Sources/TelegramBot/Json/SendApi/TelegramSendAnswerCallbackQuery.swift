@@ -43,7 +43,7 @@ public final class TelegramSendAnswerCallbackQuery: Codable {
         text: String? = nil,
         showAlert: Bool? = nil,
         url: String? = nil,
-        cacheTime: Int?
+        cacheTime: Int? = nil
     ) {
         self.callbackQueryId = callbackQueryId
         self.text = text
