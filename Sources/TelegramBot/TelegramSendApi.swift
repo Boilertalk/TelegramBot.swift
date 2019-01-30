@@ -51,6 +51,10 @@ public final class TelegramSendApi {
     public func answerCallbackQuery(answerCallbackQuery: TelegramSendAnswerCallbackQuery, response: @escaping TelegramResponseCompletion<Bool>) {
         provider.send(method: "answerCallbackQuery", request: answerCallbackQuery, response: response)
     }
+
+    public func editMessageReplyMarkup(editMessageReplyMarkup: TelegramSendEditMessageReplyMarkup, response: @escaping TelegramResponseCompletion<TelegramMessage>) {
+        provider.send(method: "editMessageReplyMarkup", request: editMessageReplyMarkup, response: response)
+    }
 }
 
 private struct EmptyRequest: Codable {

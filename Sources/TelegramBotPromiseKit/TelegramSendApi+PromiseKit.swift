@@ -51,6 +51,14 @@ public extension TelegramSendApi {
             }
         }
     }
+
+    public func editMessageReplyMarkup(editMessageReplyMarkup: TelegramSendEditMessageReplyMarkup) -> Promise<TelegramMessage> {
+        return Promise { seal in
+            self.editMessageReplyMarkup(editMessageReplyMarkup: editMessageReplyMarkup) { response in
+                response.sealPromise(seal: seal)
+            }
+        }
+    }
 }
 
 fileprivate extension TelegramResponse {
