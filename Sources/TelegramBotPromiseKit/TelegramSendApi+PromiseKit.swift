@@ -43,6 +43,14 @@ public extension TelegramSendApi {
             }
         }
     }
+
+    public func answerCallbackQuery(answerCallbackQuery: TelegramSendAnswerCallbackQuery) -> Promise<Bool> {
+        return Promise { seal in
+            self.answerCallbackQuery(answerCallbackQuery: answerCallbackQuery) { response in
+                response.sealPromise(seal: seal)
+            }
+        }
+    }
 }
 
 fileprivate extension TelegramResponse {

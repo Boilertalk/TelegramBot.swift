@@ -47,6 +47,10 @@ public final class TelegramSendApi {
         let fileRequest = FileRequest(fileId: fileId)
         provider.send(method: "getFile", request: fileRequest, response: response)
     }
+
+    public func answerCallbackQuery(answerCallbackQuery: TelegramSendAnswerCallbackQuery, response: @escaping TelegramResponseCompletion<Bool>) {
+        provider.send(method: "answerCallbackQuery", request: answerCallbackQuery, response: response)
+    }
 }
 
 private struct EmptyRequest: Codable {
