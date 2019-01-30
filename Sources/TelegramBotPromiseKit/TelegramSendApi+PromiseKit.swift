@@ -35,6 +35,14 @@ public extension TelegramSendApi {
             }
         }
     }
+
+    public func getFile(fileId: String) -> Promise<TelegramFile> {
+        return Promise { seal in
+            self.getFile(fileId: fileId) { response in
+                response.sealPromise(seal: seal)
+            }
+        }
+    }
 }
 
 fileprivate extension TelegramResponse {

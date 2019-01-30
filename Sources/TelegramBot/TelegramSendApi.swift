@@ -39,6 +39,14 @@ public final class TelegramSendApi {
     public func sendPhoto(photo: TelegramSendPhoto, response: @escaping TelegramResponseCompletion<TelegramMessage>) {
         provider.send(method: "sendPhoto", request: photo, response: response)
     }
+
+    public func getFile(fileId: String, response: @escaping TelegramResponseCompletion<TelegramFile>) {
+        struct FileRequest: Codable {
+            let fileId: String
+        }
+        let fileRequest = FileRequest(fileId: fileId)
+        provider.send(method: "getFile", request: fileRequest, response: response)
+    }
 }
 
 private struct EmptyRequest: Codable {
