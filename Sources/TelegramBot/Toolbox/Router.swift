@@ -14,7 +14,7 @@ public protocol TelegramHTTPRouter {
 
 public protocol TelegramHTTPRequest {
 
-    func json<Type: Decodable>(_ type: Type.Type, decoder: JSONDecoder, callback: @escaping (_ json: Type) -> ()) throws
+    func json<Type: Decodable>(_ type: Type.Type, decoder: JSONDecoder, callback: @escaping (_ json: Type?, Error?) -> ())
 }
 
 public enum TelegramHTTPStatus {

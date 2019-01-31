@@ -91,52 +91,53 @@ public final class TelegramReceiveApi {
      */
     public func setupWebhook(path: String, routerFunction: (_ path: String, _ callback: @escaping (_ req: TelegramHTTPRequest, _ cb: @escaping (TelegramHTTPStatus) -> ()) -> ()) -> ()) {
         routerFunction(path) { req, cb in
-            do {
-                try req.json(TelegramUpdate.self, decoder: self.defaultDecoder) { update in
-                    let updates: [Any?] = [
-                        update.message,
-                        update.editedMessage,
-                        update.channelPost,
-                        update.editedChannelPost,
-                        update.inlineQuery,
-                        update.chosenInlineResult,
-                        update.callbackQuery,
-                        update.shippingQuery,
-                        update.preCheckoutQuery
-                    ]
-
-                    // At most one of the optional parameters can be present in any given update.
-                    // Return unsuccessful if more are present.
-                    if updates.filter({ $0 == nil }).count < updates.count - 1 {
-                        cb(.badRequest)
-                        return
-                    }
-
-                    if let messageUpdate = update.message {
-                        self.messageUpdate?(update.updateId, messageUpdate)
-                    } else if let editedMessageUpdate = update.editedMessage {
-                        self.editedMessageUpdate?(update.updateId, editedMessageUpdate)
-                    } else if let channelPostUpdate = update.channelPost {
-                        self.channelPostUpdate?(update.updateId, channelPostUpdate)
-                    } else if let editedChannelPostUpdate = update.editedChannelPost {
-                        self.editedChannelPostUpdate?(update.updateId, editedChannelPostUpdate)
-                    } else if let inlineQueryUpdate = update.inlineQuery {
-                        self.inlineQueryUpdate?(update.updateId, inlineQueryUpdate)
-                    } else if let chosenInlineResultUpdate = update.chosenInlineResult {
-                        self.chosenInlineResultUpdate?(update.updateId, chosenInlineResultUpdate)
-                    } else if let callbackQueryUpdate = update.callbackQuery {
-                        self.callbackQueryUpdate?(update.updateId, callbackQueryUpdate)
-                    } else if let shippingQueryUpdate = update.shippingQuery {
-                        self.shippingQueryUpdate?(update.updateId, shippingQueryUpdate)
-                    } else if let preCheckoutQueryUpdate = update.preCheckoutQuery {
-                        self.preCheckoutQueryUpdate?(update.updateId, preCheckoutQueryUpdate)
-                    }
-
-                    // Callback and return ok
-                    cb(.ok)
+            req.json(TelegramUpdate.self, decoder: self.defaultDecoder) { update, error in
+                guard let update = update else {
+                    cb(.badRequest)
+                    return
                 }
-            } catch {
-                cb(.badRequest)
+
+                let updates: [Any?] = [
+                    update.message,
+                    update.editedMessage,
+                    update.channelPost,
+                    update.editedChannelPost,
+                    update.inlineQuery,
+                    update.chosenInlineResult,
+                    update.callbackQuery,
+                    update.shippingQuery,
+                    update.preCheckoutQuery
+                ]
+
+                // At most one of the optional parameters can be present in any given update.
+                // Return unsuccessful if more are present.
+                if updates.filter({ $0 == nil }).count < updates.count - 1 {
+                    cb(.badRequest)
+                    return
+                }
+
+                if let messageUpdate = update.message {
+                    self.messageUpdate?(update.updateId, messageUpdate)
+                } else if let editedMessageUpdate = update.editedMessage {
+                    self.editedMessageUpdate?(update.updateId, editedMessageUpdate)
+                } else if let channelPostUpdate = update.channelPost {
+                    self.channelPostUpdate?(update.updateId, channelPostUpdate)
+                } else if let editedChannelPostUpdate = update.editedChannelPost {
+                    self.editedChannelPostUpdate?(update.updateId, editedChannelPostUpdate)
+                } else if let inlineQueryUpdate = update.inlineQuery {
+                    self.inlineQueryUpdate?(update.updateId, inlineQueryUpdate)
+                } else if let chosenInlineResultUpdate = update.chosenInlineResult {
+                    self.chosenInlineResultUpdate?(update.updateId, chosenInlineResultUpdate)
+                } else if let callbackQueryUpdate = update.callbackQuery {
+                    self.callbackQueryUpdate?(update.updateId, callbackQueryUpdate)
+                } else if let shippingQueryUpdate = update.shippingQuery {
+                    self.shippingQueryUpdate?(update.updateId, shippingQueryUpdate)
+                } else if let preCheckoutQueryUpdate = update.preCheckoutQuery {
+                    self.preCheckoutQueryUpdate?(update.updateId, preCheckoutQueryUpdate)
+                }
+
+                // Callback and return ok
+                cb(.ok)
             }
         }
     }

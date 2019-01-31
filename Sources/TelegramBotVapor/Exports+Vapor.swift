@@ -27,11 +27,17 @@ extension Router {
 
 extension Request: TelegramHTTPRequest {
 
-    public func json<Type: Decodable>(_ type: Type.Type, decoder: JSONDecoder, callback: @escaping (Type) -> ()) throws {
-        _ = try content.decode(json: Type.self, using: decoder).map { decoded -> () in
-            callback(decoded)
+    public func json<Type: Decodable>(_ type: Type.Type, decoder: JSONDecoder, callback: @escaping (Type?, Error?) -> ()) {
+        do {
+            try content.decode(json: Type.self, using: decoder).map { decoded -> () in
+                callback(decoded, nil)
 
-            return ()
+                return ()
+                }.catch { error in
+                    callback(nil, error)
+            }
+        } catch {
+            callback(nil, error)
         }
     }
 }
