@@ -9,7 +9,7 @@ import Foundation
 
 public protocol TelegramHTTPRouter {
 
-    func telegramRegister(path: String, callback: @escaping (_ req: TelegramHTTPRequest, _ cb: @escaping (TelegramHTTPStatus) -> ()) throws -> ())
+    func telegramRegister(path: String, callback: @escaping (_ req: TelegramHTTPRequest, _ cb: @escaping (TelegramHTTPStatus) -> ()) -> ())
 }
 
 public protocol TelegramHTTPRequest {

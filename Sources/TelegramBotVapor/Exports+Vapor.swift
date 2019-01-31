@@ -5,11 +5,11 @@ import Vapor
 
 extension Router {
 
-    public func telegramRegister(path: String, callback: @escaping (_ req: TelegramHTTPRequest, _ cb: @escaping (TelegramHTTPStatus) -> ()) throws -> ()) {
+    public func telegramRegister(path: String, callback: @escaping (_ req: TelegramHTTPRequest, _ cb: @escaping (TelegramHTTPStatus) -> ()) -> ()) {
         post(path) { reqInternal -> Future<HTTPStatus> in
             let promiseStatus = reqInternal.eventLoop.newPromise(HTTPStatus.self)
 
-            try callback(reqInternal) { status in
+            callback(reqInternal) { status in
                 switch status {
                 case .ok:
                     promiseStatus.succeed(result: .ok)
