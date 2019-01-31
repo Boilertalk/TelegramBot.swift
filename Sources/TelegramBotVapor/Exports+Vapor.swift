@@ -2,6 +2,7 @@
 
 import TelegramBot
 import Vapor
+import Dispatch
 
 extension Router {
 
@@ -9,14 +10,17 @@ extension Router {
         post(path) { reqInternal -> Future<HTTPStatus> in
             let promiseStatus = reqInternal.eventLoop.newPromise(HTTPStatus.self)
 
-            callback(reqInternal) { status in
-                switch status {
-                case .ok:
-                    promiseStatus.succeed(result: .ok)
-                case .badRequest:
-                    promiseStatus.succeed(result: .badRequest)
-                case .internalServerError:
-                    promiseStatus.succeed(result: .internalServerError)
+            let queue = DispatchQueue(label: "TelegramRegister")
+            queue.async {
+                callback(reqInternal) { status in
+                    switch status {
+                    case .ok:
+                        promiseStatus.succeed(result: .ok)
+                    case .badRequest:
+                        promiseStatus.succeed(result: .badRequest)
+                    case .internalServerError:
+                        promiseStatus.succeed(result: .internalServerError)
+                    }
                 }
             }
 
