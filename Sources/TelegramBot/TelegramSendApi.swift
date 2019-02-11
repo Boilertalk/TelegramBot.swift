@@ -55,6 +55,24 @@ public final class TelegramSendApi {
     public func editMessageReplyMarkup(editMessageReplyMarkup: TelegramSendEditMessageReplyMarkup, response: @escaping TelegramResponseCompletion<TelegramMessage>) {
         provider.send(method: "editMessageReplyMarkup", request: editMessageReplyMarkup, response: response)
     }
+
+    public func getChatMember(chatId: TelegramSendChatIdentifier, userId: Int, response: @escaping TelegramResponseCompletion<TelegramChatMember>) {
+        struct CMRequest: Codable {
+            let chatId: TelegramSendChatIdentifier
+            let userId: Int
+        }
+        let cmRequest = CMRequest(chatId: chatId, userId: userId)
+        provider.send(method: "getChatMember", request: cmRequest, response: response)
+    }
+
+    public func deleteMessage(chatId: TelegramSendChatIdentifier, messageId: Int, response: @escaping TelegramResponseCompletion<Bool>) {
+        struct DMRequest: Codable {
+            let chatId: TelegramSendChatIdentifier
+            let messageId: Int
+        }
+        let dmRequest = DMRequest(chatId: chatId, messageId: messageId)
+        provider.send(method: "deleteMessage", request: dmRequest, response: response)
+    }
 }
 
 private struct EmptyRequest: Codable {

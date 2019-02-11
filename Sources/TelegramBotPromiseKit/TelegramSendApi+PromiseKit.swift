@@ -59,6 +59,22 @@ public extension TelegramSendApi {
             }
         }
     }
+
+    public func getChatMember(chatId: TelegramSendChatIdentifier, userId: Int) -> Promise<TelegramChatMember> {
+        return Promise { seal in
+            self.getChatMember(chatId: chatId, userId: userId) { response in
+                response.sealPromise(seal: seal)
+            }
+        }
+    }
+
+    public func deleteMessage(chatId: TelegramSendChatIdentifier, messageId: Int) -> Promise<Bool> {
+        return Promise { seal in
+            self.deleteMessage(chatId: chatId, messageId: messageId) { response in
+                response.sealPromise(seal: seal)
+            }
+        }
+    }
 }
 
 fileprivate extension TelegramResponse {
