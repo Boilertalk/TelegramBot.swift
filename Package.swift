@@ -1,8 +1,11 @@
-// swift-tools-version:4.0
+// swift-tools-version:5.2
 import PackageDescription
 
 let package = Package(
     name: "TelegramBot",
+     platforms: [
+         .macOS(.v10_15),
+    ],
     products: [
         .library(
             name: "TelegramBot",
@@ -27,7 +30,7 @@ let package = Package(
     ],
     targets: [
         .target(name: "TelegramBot", dependencies: []),
-        .target(name: "TelegramBotVapor", dependencies: ["TelegramBot", "Vapor"]),
+        .target(name: "TelegramBotVapor", dependencies: ["TelegramBot", .product(name: "Vapor", package: "vapor")]),
         .target(name: "TelegramBotPromiseKit", dependencies: ["TelegramBot", "PromiseKit"]),
         .testTarget(name: "TelegramBotTests", dependencies: ["TelegramBot", "Quick", "Nimble"])
     ]
