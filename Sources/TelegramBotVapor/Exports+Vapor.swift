@@ -4,22 +4,22 @@ import TelegramBot
 import Vapor
 import Dispatch
 
-extension Router {
+extension Application {
 
     public func telegramRegister(path: String, callback: @escaping (_ req: TelegramHTTPRequest, _ cb: @escaping (TelegramHTTPStatus) -> ()) -> ()) {
-        post(path) { reqInternal -> Future<HTTPStatus> in
-            let promiseStatus = reqInternal.eventLoop.newPromise(HTTPStatus.self)
+        post("\(path)") { request -> EventLoopFuture<HTTPStatus> in
+            let promiseStatus = request.eventLoop.makePromise(of: HTTPStatus.self)
 
             let queue = DispatchQueue(label: "TelegramRegister")
             queue.async {
-                callback(reqInternal) { status in
+                callback(request) { status in
                     switch status {
                     case .ok:
-                        promiseStatus.succeed(result: .ok)
+                        promiseStatus.succeed(.ok)
                     case .badRequest:
-                        promiseStatus.succeed(result: .badRequest)
+                        promiseStatus.succeed(.badRequest)
                     case .internalServerError:
-                        promiseStatus.succeed(result: .internalServerError)
+                        promiseStatus.succeed(.internalServerError)
                     }
                 }
             }
@@ -33,13 +33,7 @@ extension Request: TelegramHTTPRequest {
 
     public func json<Type: Decodable>(_ type: Type.Type, decoder: JSONDecoder, callback: @escaping (Type?, Error?) -> ()) {
         do {
-            try content.decode(json: Type.self, using: decoder).map { decoded -> () in
-                callback(decoded, nil)
-
-                return ()
-                }.catch { error in
-                    callback(nil, error)
-            }
+            try callback(content.decode(Type.self, using: decoder), nil)
         } catch {
             callback(nil, error)
         }

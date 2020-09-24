@@ -16,11 +16,11 @@ let package = Package(
     ],
     dependencies: [
         // Test dependencies
-        .package(url: "https://github.com/Quick/Quick.git", from: "1.2.0"),
-        .package(url: "https://github.com/Quick/Nimble.git", from: "7.0.3"),
+        .package(url: "https://github.com/Quick/Quick.git", from: "3.0.0"),
+        .package(url: "https://github.com/Quick/Nimble.git", from: "8.0.0"),
 
         // Vapor for vapor related requests, optional.
-        .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0"),
+        .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
 
         // PromiseKit dependency, optional.
         .package(url: "https://github.com/mxcl/PromiseKit.git", from: "6.0.0"),
