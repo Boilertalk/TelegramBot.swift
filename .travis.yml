@@ -6,8 +6,8 @@
 os:
   - linux
   - osx
-# Ubuntu 14.04
-dist: trusty
+# Ubuntu 16.04
+dist: xenial
 
 # Generic language as travis doesn't know anything about SPM and Linux
 language: generic

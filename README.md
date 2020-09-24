@@ -21,7 +21,7 @@
 
 This library provides helpers for Swift to interact with the [Telegram bot api](https://core.telegram.org/bots/api). It simplifies the requests to the Telegram API as well as parses incoming [updates](https://core.telegram.org/bots/api#getting-updates) for you.
 
-This library can be used with [Vapor 3](https://github.com/vapor/vapor) and with any other web libraries.
+This library can be used with [Vapor 4](https://github.com/vapor/vapor) and with any other web libraries.
 
 ## :sparkles: Supported features
 
