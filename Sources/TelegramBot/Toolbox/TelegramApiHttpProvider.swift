@@ -7,6 +7,9 @@
 
 import Foundation
 import Dispatch
+#if os(Linux)
+import FoundationNetworking
+#endif
 
 public struct TelegramApiHttpProvider: TelegramApiProvider {
 
