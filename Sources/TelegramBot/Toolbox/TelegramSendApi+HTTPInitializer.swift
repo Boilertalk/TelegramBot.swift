@@ -15,7 +15,7 @@ public extension TelegramSendApi {
      *
      * - parameter token: The telegram bot token to be used in requests.
      */
-    public convenience init(token: String) {
+    convenience init(token: String) {
         let provider = TelegramApiHttpProvider(url: "https://api.telegram.org/bot\(token)")
         self.init(token: token, provider: provider)
     }
